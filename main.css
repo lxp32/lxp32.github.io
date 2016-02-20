@@ -1,0 +1,80 @@
+body {
+	font-family: "Open Sans", "Verdana", sans-serif;
+	font-synthesis: none;
+}
+
+a {
+	color: #20898d;
+	text-decoration: none;
+}
+
+nav ul {
+	margin-left: 0.5em;
+	padding-left: 0;
+}
+
+nav li {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: large;
+	margin: 0 0.5em;
+}
+
+nav img {
+	margin-right: 0.5em;
+	vertical-align: middle;
+}
+
+nav a:hover {
+	color: black;
+}
+
+section ul {
+	list-style-type: circle;
+}
+
+footer {
+	margin-top: 2em;
+	font-size: small;
+	color: silver;
+}
+
+.herobox {
+	font-size: x-large;
+	margin: 1.5em 2em 0.5em 2em;
+}
+
+.featurebox {
+	display: inline-block;
+	vertical-align: top;
+	width: 16em;
+	margin: 0 1em;
+}
+
+.featurebox h1, h2, h3 {
+	text-align: center;
+}
+
+.featurebox ul {
+	margin-left: 0;
+	padding-left: 0;
+}
+
+.filelink img {
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+	width: 24px;
+	height: 24px;
+}
+
+.code {
+    background: #6adcde;
+    font-family: monospace;
+    font-size: large;
+    white-space: pre;
+    padding: 1em 1em 1em 4em;
+}
+
+.semanticheading {
+	display: none;
+}

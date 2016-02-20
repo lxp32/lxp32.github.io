@@ -1,0 +1,11 @@
+\format{strict=true}
+
+\create{
+	template="index.tml"
+	output="../index.html"
+}
+
+\create{
+	template="license.tml"
+	output="../license.html"
+}
