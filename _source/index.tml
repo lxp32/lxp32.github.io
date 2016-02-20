@@ -4,7 +4,7 @@
 	description="A lightweight, open source 32-bit CPU IP core optimized for FPGA implementation."
 }
 	
-	<div class="herobox">LXP32 is a lightweight, open-source 32-bit CPU IP core optimized for FPGA implementation</div>
+	<div class="herobox">LXP32 is a lightweight, open source 32-bit CPU IP core optimized for FPGA implementation</div>
 	
 	<section id="features">
 		<h1 class="semanticheading">Features</h1>
