@@ -38,14 +38,14 @@
 		</div>
 		<div class="featurebox">
 			<h3>Open source</h3>
-			<p>LXP32 is distributed under the terms of the <a href="license.html">MIT license</a></p>
+			<p>LXP32 is distributed under the terms of the <a href="/license.html">MIT license</a></p>
 		</div>
 	</section>
 	
 	<section id="download">
 		<h1>Download</h1>
 		<p>The latest version of the LXP32 CPU, 1.0, was released on 2016-02-20.</p>
-		<p class="filelink"><a href="https://github.com/lxp32/lxp32-cpu/releases/download/v1.0/lxp32-cpu-1.0.7z" download><img src="images/download-icon.svg" alt="Download" onerror="this.src='images/download-icon.png'">lxp32-cpu-1.0.7z</a> (any OS)</p>
+		<p class="filelink"><a href="https://github.com/lxp32/lxp32-cpu/releases/download/v1.0/lxp32-cpu-1.0.7z" download><img src="/images/download-icon.svg" alt="Download" onerror="this.src='/images/download-icon.png'">lxp32-cpu-1.0.7z</a> (any OS)</p>
 		<p>The package includes:</p>
 		<ul>
 			<li>synthesizable RTL description</li>
@@ -57,7 +57,7 @@
 	
 	<section id="docs">
 		<h1>Documentation</h1>
-		<p class="filelink"><a href="docs/lxp32-trm.pdf" download><img src="images/Adobe_PDF_file_icon_24x24.png" alt="[PDF]">LXP32 CPU Technical Reference Manual</a></p>
+		<p class="filelink"><a href="/docs/lxp32-trm.pdf" download><img src="/images/Adobe_PDF_file_icon_24x24.png" alt="[PDF]">LXP32 CPU Technical Reference Manual</a></p>
 	</section>
 	
 	<section id="dev">
