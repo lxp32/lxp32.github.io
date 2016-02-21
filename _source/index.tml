@@ -63,9 +63,10 @@
 	<section id="dev">
 		<h1>Development</h1>
 		<p><a href="https://github.com/lxp32/lxp32-cpu">LXP32 project page on GitHub</a></p>
+		<p><a href="http://opencores.org/project,lxp32">Official mirror on OpenCores</a></p>
+		<p><a href="https://github.com/lxp32/lxp32-cpu/issues">File a defect report</a></p>
 		<p>Clone the source code repository:</p>
 		<p class="code">git clone https://github.com/lxp32/lxp32-cpu.git</p>
-		<p><a href="https://github.com/lxp32/lxp32-cpu/issues">File a defect report</a></p>
 	</section>
 	
 \create{template="footer.tml"}
