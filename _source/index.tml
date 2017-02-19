@@ -72,4 +72,9 @@
 		<p class="code">git clone https://github.com/lxp32/lxp32-cpu.git</p>
 	</section>
 	
+	<section id="links">
+		<h1>Links</h1>
+		<p><a href="https://bonfireprocessor.github.io/">The Bonfire Processor</a>, a fork of LXP32 implementing the <a href="https://riscv.org/">RISC-V instruction set</a></p>
+	</section>
+	
 \create{template="footer.tml"}
