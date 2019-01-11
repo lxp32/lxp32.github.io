@@ -3,6 +3,10 @@ body {
 	font-synthesis: none;
 }
 
+p {
+	max-width: 50em;
+}
+
 a {
 	color: #20898d;
 	text-decoration: none;
@@ -39,7 +43,7 @@ footer {
 	color: silver;
 }
 
-.herobox {
+.tagline {
 	font-size: x-large;
 	margin: 1.5em 2em 0.5em 2em;
 }
@@ -47,7 +51,7 @@ footer {
 .featurebox {
 	display: inline-block;
 	vertical-align: top;
-	width: 16em;
+	width: 20em;
 	margin: 0 1em;
 }
 

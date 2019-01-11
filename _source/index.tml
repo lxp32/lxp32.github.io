@@ -4,23 +4,25 @@
 	description="A lightweight, open source 32-bit CPU IP core optimized for FPGA implementation."
 }
 	
-	<div class="herobox">LXP32 is a lightweight, open source 32-bit CPU IP core optimized for FPGA implementation</div>
+	<div class="tagline">LXP32 is a lightweight, open source 32-bit CPU IP core optimized for FPGA implementation</div>
 	
 	<section id="features">
 		<h1 class="semanticheading">Features</h1>
 		<div class="featurebox">
 			<h3>Portable</h3>
 			<ul>
-				<li>Described in portable VHDL-93, not tied to any particular vendor</li>
-				<li>Compatible with later VHDL standard revisions</li>
+				<li>Described in behavioral VHDL-93</li>
+				<li>Easily integrated into Verilog and VHDL based designs</li>
+				<li>Can be implemented on virtually any FPGA, not tied to any particular vendor</li>
 			</ul>
 		</div>
 		<div class="featurebox">
 			<h3>Optimized for FPGA</h3>
 			<ul>
-				<li>3-stage pipeline</li>
-				<li>256 registers implemented as block RAM (does not require distributed RAM)</li>
-				<li>Less than 30 distinct opcodes</li>
+				<li>3-stage hazard-free pipeline</li>
+				<li>256 registers implemented as a RAM block</li>
+				<li>Only 30 distinct opcodes</li>
+				<li>Clock frequencies of 100&nbsp;MHz and above are achievable on most modern FPGAs</li>
 			</ul>
 		</div>
 		<div class="featurebox">
@@ -40,26 +42,39 @@
 			</ul>
 		</div>
 		<div class="featurebox">
+			<h3>Proven</h3>
+			<ul>
+				<li>Comes with a verification environment</li>
+				<li>Used in commercial projects</li>
+			</ul>
+		</div>
+		<div class="featurebox">
 			<h3>Open source</h3>
-			<p>LXP32 is distributed under the terms of the <a href="/license.html">MIT license</a></p>
+			<ul>
+				<li>Distributed under the terms of the <a href="/license.html">MIT license</a></li>
+			</ul>
 		</div>
 	</section>
 	
 	<section id="download">
 		<h1>Download</h1>
-		<p>The latest version of the LXP32 CPU, 1.0, was released on 2016-02-20.</p>
-		<p class="filelink"><a href="https://github.com/lxp32/lxp32-cpu/releases/download/v1.0/lxp32-cpu-1.0.7z" download><img src="/images/download-icon.svg" alt="Download" onerror="this.src='/images/download-icon.png'"> lxp32-cpu-1.0.7z</a></p>
+		<p>The latest version of the LXP32 CPU, 1.1, was released on 2019-01-11.</p>
+		<p class="filelink"><a href="https://github.com/lxp32/lxp32-cpu/releases/download/v1.1/lxp32-cpu-1.1.7z" download><img src="/images/download-icon.svg" alt="Download" onerror="this.src='/images/download-icon.png'"> lxp32-cpu-1.1.7z</a></p>
 		<p>The package includes:</p>
 		<ul>
 			<li>synthesizable RTL description</li>
 			<li>documentation</li>
 			<li>automated verification environment (self-checking testbench)</li>
-			<li>software tools (assembler/linker, disassembler) with source code</li>
+			<li>development tools (assembler/linker, disassembler) with source code</li>
 		</ul>
+		<p>Note that LXP32 is based on an original ISA (Instruction Set Architecture) which does not have a C compiler yet. This makes it more suitable for small bare metal SoCs.</p>
 	</section>
 	
 	<section id="docs">
 		<h1>Documentation</h1>
+		
+		<p>LXP32 comes with a comprehensive and up-to-date manual which contains all the information needed to integrate the CPU into your design and develop software for it:</p>
+		
 		<p class="filelink"><a href="/docs/lxp32-trm.pdf"><img src="/images/Adobe_PDF_file_icon_24x24.png" alt="[PDF]"> LXP32 CPU Technical Reference Manual</a></p>
 	</section>
 	
