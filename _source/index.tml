@@ -44,14 +44,15 @@
 		<div class="featurebox">
 			<h3>Proven</h3>
 			<ul>
-				<li>Comes with a verification environment</li>
-				<li>Used in commercial projects</li>
+				<li>Comes with a verification environment (self-checking testbench)</li>
+				<li>Used in commercial FPGA-based projects</li>
 			</ul>
 		</div>
 		<div class="featurebox">
 			<h3>Open source</h3>
 			<ul>
-				<li>Distributed under the terms of the <a href="/license.html">MIT license</a></li>
+				<li>Permissive <a href="/license.html">MIT license</a>, friendly for commercial use</li>
+				<li>Open source simulation is available using <a href="http://ghdl.free.fr/">GHDL</a></li>
 			</ul>
 		</div>
 	</section>
@@ -67,7 +68,7 @@
 			<li>automated verification environment (self-checking testbench)</li>
 			<li>development tools (assembler/linker, disassembler) with source code</li>
 		</ul>
-		<p>Note that LXP32 is based on an original ISA (Instruction Set Architecture) which does not have a C compiler yet. This makes it more suitable for small bare metal SoCs.</p>
+		<p>Note that LXP32 is based on an original ISA (Instruction Set Architecture) which does not have a C compiler. This makes it more suitable for small bare metal SoCs.</p>
 	</section>
 	
 	<section id="docs">
