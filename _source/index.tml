@@ -82,7 +82,6 @@
 	<section id="dev">
 		<h1>Development</h1>
 		<p><a href="https://github.com/lxp32/lxp32-cpu">GitHub project page</a></p>
-		<p><a href="https://www.librecores.org/catharanthus/lxp32-cpu">LXP32 page at LibreCores</a></p>
 		<p><a href="https://github.com/lxp32/lxp32-cpu/issues">File a defect report</a></p>
 		<p>Clone the source code repository:</p>
 		<p class="code">git clone https://github.com/lxp32/lxp32-cpu.git</p>
@@ -90,6 +89,8 @@
 	
 	<section id="links">
 		<h1>Links</h1>
+		<p><a href="https://opencores.org/projects/lxp32">LXP32 page at OpenCores</a></p>
+		<p><a href="https://www.librecores.org/catharanthus/lxp32-cpu">LXP32 page at LibreCores</a></p>
 		<p><a href="https://bonfireprocessor.github.io/">The Bonfire Processor</a>, a fork of LXP32 implementing the <a href="https://riscv.org/">RISC-V instruction set</a></p>
 	</section>
 	
