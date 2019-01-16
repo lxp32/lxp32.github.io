@@ -46,6 +46,7 @@
 			<ul>
 				<li>Comes with a verification environment (self-checking testbench)</li>
 				<li>Used in commercial FPGA-based projects</li>
+				<li class="filelink"><img src="/images/occp-star.png" alt="OpenCores Certified Project star">OpenCores Certified Project</li>
 			</ul>
 		</div>
 		<div class="featurebox">
