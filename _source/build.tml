@@ -9,3 +9,23 @@
 	template="license.tml"
 	output="../license.html"
 }
+
+\create{
+	template="contact.tml"
+	output="../contact.html"
+}
+
+\create{
+	template="an/why-use-a-soft-cpu-core.tml"
+	output="../an/why-use-a-soft-cpu-core/index.html"
+}
+
+\create{
+	template="an/lxp32-coding-style-guidelines.tml"
+	output="../an/lxp32-coding-style-guidelines/index.html"
+}
+
+\create{
+	template="an/a-tiny-bootloader-for-lxp32.tml"
+	output="../an/a-tiny-bootloader-for-lxp32/index.html"
+}

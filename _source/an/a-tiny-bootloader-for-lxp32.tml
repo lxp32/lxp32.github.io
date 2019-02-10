@@ -1,0 +1,118 @@
+\create{
+	template="header.tml"
+	title="A tiny bootloader for LXP32 &ndash; The LXP32 Processor"
+	description="A minimalistic bootloader ROM for the LXP32 CPU which requires only eight 32-bit words."
+}
+	
+	<h1>A tiny bootloader for LXP32</h1>
+	
+	<section>
+		<p>If a program is stored in a slow external memory device (e.g. a serial Flash chip), it must be copied to the RAM before executing. While it is possible to design a RAM loading machine in Verilog or VHDL, this task can be also accomplished by the CPU itself, provided that the program RAM is accessible from the data bus.</p>
+		
+		<p>To do this we will need a small ROM consisting of eight 32-bit words which will be accessible to the CPU via the instruction bus (it doesn't have to be connected to the data bus). Such a tiny ROM can be implemented on LUTs without using RAM blocks.</p>
+		
+		<p>To make the bootloader as small as possible, we place a few limitations on the system address space layout:</p>
+		
+		<ul>
+			<li>the program RAM must start from the zero address (0x00000000),</li>
+			<li>the bootloader code must be located at the very end of the address space, starting at 0xFFFFFFE0.</li>
+		</ul>
+		
+		<p>Let's also assume that the source address is 0x04000000 (any address consisting mostly of zeros will work), and the program size is 2048 words (i.e. 16384 bytes, any size less than 1048576 will work).</p>
+		
+		<pre class="code">	<b>sl</b> r1, 4, 24 <i>// r1 = 0x04000000 - source pointer</i>
+<i>// r2 is already 0 after reset - destination pointer</i>
+	<b>lcs</b> r3, 16384 <i>// program memory size in bytes</i>
+	<b>lcs</b> r4, Loop
+Loop:
+	<b>lw</b> r0, r1
+	<b>sw</b> r2, r0
+	<b>add</b> r1, r1, 4
+	<b>add</b> r2, r2, 4
+	<b>cjmpul</b> r4, r2, r3 <i>// loop</i></pre>
+		
+		<p>The source address is loaded to <span class="icode">r1</span> using the <span class="icode"><b>sl</b></span> command instead of <span class="icode"><b>lc</b></span> since it only occupies one word. After copying the required number of words, the last <span class="icode"><b>cjmpul</b></span> instruction will cause the instruction pointer to overflow and transfer execution to the 0x00000000 address, which is the start of the program RAM.</p>
+		
+		<p>To compile the code, we must specify the base address explicitly, for example:</p>
+		
+		<div class="code">lxp32asm -b 0xFFFFFFE0 -f hex bootrom.asm</div>
+		
+		<p>As a result, the following machine code will be generated:</p>
+		
+		<pre class="code">70010418
+A0034000
+BF04FFEC
+22000100
+33000200
+42010104
+42020204
+CB040302</pre>
+		
+		<h2>ROM code in Verilog</h2>
+		
+		<pre class="code"><b>module</b> bootrom(
+	<b>input</b> clk_i,
+	<b>input</b> [2:0] addr_i,
+	<b>output reg</b> [31:0] data_o
+);
+
+<b>always</b>@(<b>posedge</b> clk_i) <b>begin</b>
+	<b>case</b>(<b>addr_i</b>)
+		3'b000: data_o  = 32'h70010418;
+		3'b001: data_o  = 32'hA0034000;
+		3'b010: data_o  = 32'hBF04FFEC;
+		3'b011: data_o  = 32'h22000100;
+		3'b100: data_o  = 32'h33000200;
+		3'b101: data_o  = 32'h42010104;
+		3'b110: data_o  = 32'h42020204;
+		<b>default</b>: data_o = 32'hCB040302;
+	<b>endcase</b>
+<b>end</b>
+
+<b>endmodule</b></pre>
+		
+		<h2>ROM code in VHDL</h2>
+		
+		<pre class="code"><b>library</b> ieee;
+<b>use</b> ieee.std_logic_1164.<b>all</b>;
+
+<b>entity</b> bootrom <b>is</b>
+	<b>port</b>(
+		clk_i: <b>in std_logic</b>;
+		addr_i: <b>in std_logic_vector</b>(2 downto 0);
+		data_o: <b>out std_logic_vector</b>(31 downto 0)
+	);
+<b>end entity</b>;
+
+<b>architecture</b> rtl <b>of</b> bootrom <b>is</b>
+
+<b>begin</b>
+
+<b>process</b>(clk_i)
+<b>begin</b>
+	<b>if rising_edge</b>(clk_i) <b>then</b>
+		<b>case</b> addr_i <b>is</b>
+		<b>when</b> "000" =>
+			data_o<=X"70010418";
+		<b>when</b> "001" =>
+			data_o<=X"A0034000";
+		<b>when</b> "010" =>
+			data_o<=X"BF04FFEC";
+		<b>when</b> "011" =>
+			data_o<=X"22000100";
+		<b>when</b> "100" =>
+			data_o<=X"33000200";
+		<b>when</b> "101" =>
+			data_o<=X"42010104";
+		<b>when</b> "110" =>
+			data_o<=X"42020204";
+		<b>when others</b> =>
+			data_o<=X"CB040302";
+		<b>end case</b>;
+	<b>end if</b>;
+<b>end process</b>;
+
+<b>end architecture</b>;</pre>
+	</section>
+
+\create{template="footer.tml"}

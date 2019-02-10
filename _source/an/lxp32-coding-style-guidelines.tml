@@ -1,0 +1,66 @@
+\create{
+	template="header.tml"
+	title="Coding style guidelines &ndash; The LXP32 Processor"
+	description="Suggestions for naming conventions and code organization for the LXP32 assembly language."
+}
+	
+	<h1>LXP32 coding style guidelines</h1>
+	
+	<section>
+		<p>This document provides a few suggestions on coding style for developing software in the LXP32 assembly language. These guidelines were tested in a medium-sized commercial project.</p>
+		
+		<h2>Registers</h2>
+		
+		<p>One distinctive feature of the LXP32 processor is the abundance of registers, which can be used not only for parameter passing or temporary storage, but even for long term storage. An example of register allocation:</p>
+		
+		<ul>
+			<li><span class="icode">r0</span> is used like an accumulator, to store values that are needed immediately, for example, data or code pointers.</li>
+			<li><span class="icode">r1</span>&ndash;<span class="icode">r31</span> are used to pass parameters to procedures, as per the calling convention described in the manual. They are considered <em>caller-saved</em>, meaning that the caller must expect that the called procedure can modify them. These registers can be also used for temporary storage, like <span class="icode">r0</span>.</li>
+			<li><span class="icode">r32</span>&ndash;<span class="icode">r63</span> are callee-saved general purpose registers. If a procedure modifies any of them, it must restore their value before return.</li>
+			<li><span class="icode">r64</span>&ndash;<span class="icode">r239</span> are global register variables which can be used by any procedure.</li>
+		</ul>
+		
+		<p>To simplify the use of register variables, global or otherwise, it is recommended to declare them as macros:</p>
+		
+		<pre class="code"><b>#define</b> x r1
+<b>#define</b> y r2
+<b>#define</b> z r3</pre>
+		
+		<p>Macro definitions for global register variables should be placed in a separate include file with the <em>inc</em> extension.</p>
+		
+		<h2>Identifiers</h2>
+		
+		<p>It is useful to adopt a naming convention to distinguish between various types of identifiers:</p>
+		
+		<ul>
+			<li>use lowercase for macros referring to register variables;</li>
+			<li>use UPPERCASE for other kinds of macros, such as constants;</li>
+			<li>Capitalize the first letters of symbol identifiers (labels);</li>
+			<li>procedure labels should end with <span class="icode">_proc</span>, interrupt handler labels &ndash; with <span class="icode">_handler</span>.</li>
+		</ul>
+		
+		<p>A simple example that calls a procedure 1000 times:</p>
+		
+		<pre class="code"><b>#define</b> ITERATIONS 1000
+
+<b>#define</b> i r32
+
+	<b>lcs</b> i, ITERATIONS
+Loop:
+	<b>lcs</b> r0, Do_action_proc
+	<b>call</b> r0
+	<b>sub</b> i, i, 1
+	<b>lcs</b> r0, Loop
+	<b>cjpmne</b> r0, i, 0</pre>
+		
+		<h2>Modules</h2>
+		
+		<p>It is recommended to put every non-trivial procedure to a separate module (source code file). Besides general code clarity, doing so has other advantages:</p>
+		
+		<ul>
+			<li>Avoiding clashes between macros referring to local register variables (since macro definition scope lasts until the end of the module).</li>
+			<li>The LXP32 linker automatically excludes unused modules from the output binary. However, if at least one symbol of the module is used, that module gets linked in its entirety. Placing procedures to separate modules helps to avoid linkage of unused procedures.</li>
+		</ul>
+	</section>
+
+\create{template="footer.tml"}

@@ -3,10 +3,6 @@ body {
 	font-synthesis: none;
 }
 
-p {
-	max-width: 50em;
-}
-
 a {
 	color: #20898d;
 	text-decoration: none;
@@ -21,7 +17,7 @@ nav li {
 	display: inline-block;
 	vertical-align: middle;
 	font-size: large;
-	margin: 0 0.5em;
+	margin: 0 0.4em;
 }
 
 nav img {
@@ -31,6 +27,10 @@ nav img {
 
 nav a:hover {
 	color: black;
+}
+
+section p, section ul {
+	max-width: 50em;
 }
 
 section ul {
@@ -43,9 +43,23 @@ footer {
 	color: silver;
 }
 
+footer p {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+h4 {
+	margin-bottom: 0.5em;
+}
+
 .tagline {
 	font-size: x-large;
-	margin: 1.5em 2em 0.5em 2em;
+	margin: 1.5em 2em 0.5em 3rem;
+}
+
+.subtagline {
+	font-size: large;
+	margin: 0 2em 0.5em 3rem;
 }
 
 .featurebox {
@@ -55,7 +69,7 @@ footer {
 	margin: 0 1em;
 }
 
-.featurebox h1, h2, h3 {
+.featurebox h1, .featurebox h2, .featurebox h3 {
 	text-align: center;
 }
 
@@ -73,11 +87,34 @@ footer {
 .code {
     background: #6adcde;
     font-family: monospace;
-    font-size: large;
+	font-size: 0.9rem;
     white-space: pre;
     padding: 1em 1em 1em 4em;
+	width: 50em;
+}
+
+.icode {
+    font-family: monospace;
+	font-size: 0.9rem;
 }
 
 .semanticheading {
 	display: none;
+}
+
+.snippet {
+	font-size: smaller;
+	margin-top: 0;
+}
+
+.readmore {
+	white-space: nowrap;
+}
+
+.contactform {
+	width: 40em;
+}
+
+.formfield {
+	width: 100%;
 }

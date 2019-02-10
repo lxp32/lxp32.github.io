@@ -2,8 +2,8 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<meta name="description" content="A lightweight, open source 32-bit CPU IP core optimized for FPGA implementation.">
-	<title>LXP32 home page</title>
+	<meta name="description" content="A lightweight, open source and FPGA-friendly 32-bit soft processor IP core based on an original instruction set.">
+	<title>The LXP32 Processor</title>
 	<link rel="stylesheet" type="text/css" href="/main.css">
 	<link rel="icon" type="image/png" href="/images/lxp32-logo.png">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
@@ -18,20 +18,23 @@
 			<li><a href="/#dev">Development</a></li>
 			<li><a href="/#links">Links</a></li>
 			<li><a href="/license.html">License</a></li>
+			<li><a href="/contact.html">Contacts</a></li>
 		</ul>
 	</nav>
 
 	
 	<div class="tagline">LXP32 is a lightweight, open source and FPGA-friendly 32-bit CPU IP core</div>
 	
+	<div class="subtagline"><i>A soft processor core based on a simple, original instruction set designed for efficient FPGA implementation</i></div>
+	
 	<section id="features">
 		<h1 class="semanticheading">Features</h1>
 		<div class="featurebox">
 			<h3>Portable</h3>
 			<ul>
-				<li>Described in behavioral VHDL-93</li>
+				<li>Described in behavioral VHDL</li>
 				<li>Easily integrated into Verilog and VHDL based designs</li>
-				<li>Can be implemented on virtually any FPGA, not tied to any particular vendor</li>
+				<li>Usable on virtually any FPGA, not tied to any particular vendor</li>
 			</ul>
 		</div>
 		<div class="featurebox">
@@ -63,7 +66,7 @@
 			<h3>Proven</h3>
 			<ul>
 				<li>Comes with a verification environment (self-checking testbench)</li>
-				<li>Used in commercial FPGA-based projects</li>
+				<li>Used in commercial projects</li>
 				<li class="filelink"><img src="/images/occp-star.png" alt="OpenCores Certified Project star">OpenCores Certified Project</li>
 			</ul>
 		</div>
@@ -77,37 +80,42 @@
 	</section>
 	
 	<section id="download">
-		<h1>Download</h1>
-		<p>The latest version of the LXP32 CPU, 1.1, was released on 2019-01-11.</p>
-		<p class="filelink"><a href="https://github.com/lxp32/lxp32-cpu/releases/download/v1.1/lxp32-cpu-1.1.7z" download><img src="/images/download-icon.svg" alt="Download" onerror="this.src='/images/download-icon.png'"> lxp32-cpu-1.1.7z</a></p>
+		<h2>Download</h2>
+		<p>The latest version of the LXP32 soft microprocessor, 1.1, was released on 2019-01-11.</p>
+		<p class="filelink"><a href="https://github.com/lxp32/lxp32-cpu/releases/download/v1.1/lxp32-cpu-1.1.7z" download><img src="/images/download-icon.svg" alt="Download" onerror="this.src='/images/download-icon.png'"> <b>lxp32-cpu-1.1.7z</b></a></p>
 		<p>The package includes:</p>
 		<ul>
-			<li>synthesizable RTL description</li>
+			<li>synthesizable RTL description of the CPU</li>
 			<li>documentation</li>
 			<li>automated verification environment (self-checking testbench)</li>
-			<li>development tools (assembler/linker, disassembler) with source code</li>
+			<li>software development tools (assembler/linker, disassembler) with source code</li>
+			<li>configurable WISHBONE interconnect generator</li>
 		</ul>
-		<p>Note that LXP32 is based on an original ISA (Instruction Set Architecture) which does not have a C compiler. This makes it more suitable for small bare metal SoCs.</p>
+		<p>The LXP32 instruction set architecture doesn't have a compiler backend yet, only assembly based workflow is supported. This makes LXP32 more useful in a small bare metal SoC running from on-chip RAM.</p>
 	</section>
 	
 	<section id="docs">
-		<h1>Documentation</h1>
-		
-		<p>LXP32 comes with a comprehensive and up-to-date manual which contains all the information needed to integrate the CPU into your design and develop software for it:</p>
-		
+		<h2>Documentation</h2>
+		<p>The LXP32 soft CPU core comes with a comprehensive and up-to-date manual which contains all the information needed to integrate the processor into your design and develop software for it:</p>
 		<p class="filelink"><a href="/docs/lxp32-trm.pdf"><img src="/images/Adobe_PDF_file_icon_24x24.png" alt="[PDF]"> LXP32 CPU Technical Reference Manual</a></p>
+		
+		<h3>Application Notes / White Papers</h3>
+		<p class="filelink"><a href="/an/why-use-a-soft-cpu-core/"><img src="/images/html-icon.svg" alt="[HTML]" onerror="this.src='/images/html-icon.png'"> Why use a soft CPU core?</a></p>
+		<p class="filelink"><a href="/an/lxp32-coding-style-guidelines/"><img src="/images/html-icon.svg" alt="[HTML]" onerror="this.src='/images/html-icon.png'"> LXP32 coding style guidelines</a></p>
+		<p class="filelink"><a href="/an/a-tiny-bootloader-for-lxp32/"><img src="/images/html-icon.svg" alt="[HTML]" onerror="this.src='/images/html-icon.png'"> A tiny bootloader for LXP32</a></p>
 	</section>
 	
 	<section id="dev">
-		<h1>Development</h1>
+		<h2>Development</h2>
 		<p><a href="https://github.com/lxp32/lxp32-cpu">GitHub project page</a></p>
 		<p><a href="https://github.com/lxp32/lxp32-cpu/issues">File a defect report</a></p>
 		<p>Clone the source code repository:</p>
-		<p class="code">git clone https://github.com/lxp32/lxp32-cpu.git</p>
+		<div class="code">git clone https://github.com/lxp32/lxp32-cpu.git</div>
+		<p>You can use <a href="/contact.html">this form</a> to contact the developer.</p>
 	</section>
 	
 	<section id="links">
-		<h1>Links</h1>
+		<h2>Links</h2>
 		<p><a href="https://opencores.org/projects/lxp32">LXP32 page at OpenCores</a></p>
 		<p><a href="https://www.librecores.org/catharanthus/lxp32-cpu">LXP32 page at LibreCores</a></p>
 		<p><a href="https://bonfireprocessor.github.io/">The Bonfire Processor</a>, a fork of LXP32 implementing the <a href="https://riscv.org/">RISC-V instruction set</a></p>
@@ -115,6 +123,7 @@
 	
 	<footer>
 		<p>© 2016&ndash;2019 by Alex I. Kuznetsov</p>
+		<p>All company and product names are trademarks or registered trademarks of their respective owners.</p>
 	</footer>
 </body>
 </html>
