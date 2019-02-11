@@ -118,3 +118,9 @@ h4 {
 .formfield {
 	width: 100%;
 }
+
+@media print {
+	nav, footer {
+		display: none;
+	}
+}
