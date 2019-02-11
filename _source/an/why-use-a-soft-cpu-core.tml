@@ -6,6 +6,8 @@
 	
 	<h1>Why use a soft CPU core?</h1>
 	
+	<div class="filelink noprint"><a href="javascript:window.print();"><img src="/images/printer-icon.svg" alt="[Printer]" onerror="this.src='/images/printer-icon.png'"> Print this page</a></div>
+	
 	<section>
 		<p>A <em>soft core</em> is a reusable module delivered to the system on a chip (SoC) designer in the form of synthesizable HDL code. On FPGA devices soft cores are implemented using programmable logic resources, as opposed to <em>hard cores</em> baked into the silicon. You may wonder, if someone needs a processor, why would they use an FPGA at all when one can opt for a cheaper microcontroller instead?</p>
 

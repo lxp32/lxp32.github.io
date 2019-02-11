@@ -6,6 +6,8 @@
 	
 	<h1>A tiny bootloader for LXP32</h1>
 	
+	<div class="filelink noprint"><a href="javascript:window.print();"><img src="/images/printer-icon.svg" alt="[Printer]" onerror="this.src='/images/printer-icon.png'"> Print this page</a></div>
+	
 	<section>
 		<p>If a program is stored in a slow external memory device (e.g. a serial Flash chip), it must be copied to the RAM before executing. While it is possible to design a RAM loading machine in Verilog or VHDL, this task can be also accomplished by the CPU itself, provided that the program RAM is accessible from the data bus.</p>
 		

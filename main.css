@@ -119,8 +119,11 @@ h4 {
 	width: 100%;
 }
 
+.noprint {
+}
+
 @media print {
-	nav, footer {
+	nav, footer, .noprint {
 		display: none;
 	}
 }
