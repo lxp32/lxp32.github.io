@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="An implementation of the CRC32 algorithm in the LXP32 assembly language.">
+	<title>A simple example: CRC32 calculation &ndash; The LXP32 Processor</title>
+	<link rel="stylesheet" type="text/css" href="/main.css">
+	<link rel="icon" type="image/png" href="/images/lxp32-logo.png">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<nav>
+		<ul>
+			<li><a href="/"><img src="/images/lxp32-logo.png" alt="LXP32"></a></li>
+			<li><a href="/#features">Features</a></li>
+			<li><a href="/#download">Download</a></li>
+			<li><a href="/#docs">Documentation</a></li>
+			<li><a href="/#dev">Development</a></li>
+			<li><a href="/#links">Links</a></li>
+			<li><a href="/license.html">License</a></li>
+			<li><a href="/contact.html">Contacts</a></li>
+		</ul>
+	</nav>
+
+	
+	<h1>A simple example: CRC32 calculation</h1>
+	
+	<div class="filelink noprint"><a href="javascript:window.print();"><img src="/images/printer-icon.svg" alt="[Printer]" onerror="this.src='/images/printer-icon.png'"> Print this page</a></div>
+	
+	<section>
+		<p>CRC32 is a popular checksum algorithm used to detect data corruption. There are a few variants of the algorithm which have the same mathematical properties but produce different results. The most common variant of the CRC32 checksum is calculated as follows:</p>
+		
+		<pre class="code"><b>#include</b> &lt;stddef.h&gt;
+<b>#include</b> &lt;stdint.h&gt;
+
+uint32_t crc32(<b>const char</b> *s,size_t n) {
+	uint32_t crc=0xFFFFFFFF;
+	
+	<b>for</b>(size_t i=0;i&lt;n;i++) {
+		<b>char</b> ch=s[i];
+		<b>for</b>(size_t j=0;j&lt;8;j++) {
+			uint32_t b=(ch^crc)&amp;1;
+			crc&gt;&gt;=1;
+			<b>if</b>(b) crc=crc^0xEDB88320;
+			ch&gt;&gt;=1;
+		}
+	}
+	
+	<b>return</b> ~crc;
+}</pre>
+	
+		<p>When called for the <span class="icode">"123456789"</span> string (without the terminating null character), this function will return <span class="icode">0xCBF43926</span>.</p>
+		
+		<p>A possible implementation of this algorithm in the LXP32 assembly language is presented below:</p>
+		
+		<pre class="code"><b>#export</b> Crc32_proc
+
+<i>/* 
+ * Crc32_proc
+ *
+ * Calculates the most common variant of the CRC-32 checksum.
+ * Example: CRC32("123456789") = 0xCBF43926.
+ *
+ * Inputs
+ *     r1: p (string pointer)
+ *     r2: n (string length in bytes)
+ *     r3: old_value (initially 0, see below)
+ * Outputs
+ *     r1: CRC32 value
+ *
+ * Note: the "old_value" argument should be initially set to 0. To continue
+ * the calculation, set it to the value returned by the previous call.
+ * This feature can be useful to calculate the checksum for a long data stream
+ * piecewise.
+ */</i>
+
+<b>#define</b> p r1
+<b>#define</b> n r2
+<b>#define</b> crc r3
+<b>#define</b> ch r4
+<b>#define</b> j r5
+<b>#define</b> b r6
+<b>#define</b> polynom r7
+<b>#define</b> string_end_ptr r8
+<b>#define</b> loop_end_ptr r9
+<b>#define</b> dont_xor_ptr r10
+<b>#define</b> bit_loop_ptr r11
+<b>#define</b> byte_loop_ptr r12
+
+Crc32_proc:
+	<b>lc</b> polynom, 0xEDB88320
+	<b>add</b> string_end_ptr, p, n
+	<b>lcs</b> loop_end_ptr, Crc32_loop_end
+	<b>lcs</b> dont_xor_ptr, Crc32_dont_xor
+	<b>lcs</b> bit_loop_ptr, Crc32_bit_loop
+	<b>lcs</b> byte_loop_ptr, Crc32_byte_loop
+	<b>not</b> crc, crc
+	
+	<b>cjmpe</b> loop_end_ptr, n, 0
+	
+Crc32_byte_loop:
+	<b>lub</b> ch, p
+	<b>lcs</b> j, 0
+
+Crc32_bit_loop:
+	<b>xor</b> b, ch, crc
+	<b>and</b> b, b, 1
+	<b>sru</b> crc, crc, 1
+	<b>cjmpe</b> dont_xor_ptr, b, 0
+	<b>xor</b> crc, crc, polynom
+	
+Crc32_dont_xor:
+	<b>sru</b> ch, ch, 1
+	<b>add</b> j, j, 1
+	<b>cjmpul</b> bit_loop_ptr, j, 8 <i>// end of the bit loop</i>
+	<b>add</b> p, p, 1
+	<b>cjmpul</b> byte_loop_ptr, p, string_end_ptr <i>// end of the byte loop</i>
+	
+Crc32_loop_end:
+	<b>not</b> r1, crc
+	<b>ret</b></pre>
+	
+	<p>Notes:</p>
+	
+	<ul>
+		<li>This procedure conforms to the calling convention recommended by the manual. Since it doesn't call any nested procedures, and <span class="icode">r0</span>&ndash;<span class="icode">r31</span> registers are designated as caller-saved, it doesn't need to use the stack.</li>
+		<li>The code is assumed to be located near the beginning or end of the address space, hence <span class="icode"><b>lcs</b></span> (<em>Load Constant Short</em>) is used to load pointers. If the linker complains about pointers being out of range, replace <span class="icode"><b>lcs</b></span> with <span class="icode"><b>lc</b></span>.</li>
+		<li>To reduce loop execution time, all branch pointers are preloaded. Additionally, to avoid keeping track of both <span class="icode">i</span> and the current byte pointer, we calculate the <span class="icode">string_end_ptr</span> at the beginning and don't use the <span class="icode">i</span> variable at all.</li>
+		<li>Loops are implemented as post-condition to reduce execution time. Compare a pre-condition loop:
+			<pre class="code">Crc32_byte_loop:
+	<b>cjmpuge</b> loop_end_ptr, p, string_end_ptr
+	<b>lub</b> ch, p
+	...
+	<b>jmp</b> byte_loop_ptr</pre>
+			<div>with a post-condition one:</div>
+			<pre class="code">Crc32_byte_loop:
+	<b>lub</b> ch, p
+	...
+	<b>cjmpul</b> byte_loop_ptr, p, string_end_ptr</pre>
+		In the pre-condition version, <span class="icode"><b>cjmpuge</b></span> takes 2 cycles to execute (assuming the jump is not taken), and <span class="icode"><b>jmp</b></span> requires 4 cycles. In the post-condition version, we just need 5 cycles for <span class="icode"><b>cjmpul</b></span> (assuming the jump is taken).
+		</li>
+		<li>The innermost <span class="icode"><b>if</b></span> statement can be replaced with a multiplication:
+		<pre class="code">Crc32_bit_loop:
+	<b>xor</b> b, ch, crc
+	<b>and</b> b, b, 1
+	<b>sru</b> crc, crc, 1
+	<s><b>cjmpe</b> dont_xor_ptr, b, 0</s> <font color="red"><b>mul</b> b, b, polynom</font>
+	<s><b>xor</b> crc, crc, polynom</s> <font color="red"><b>xor</b> crc, crc, b</font>
+	
+<s>Crc32_dont_xor:</s>
+	<b>sru</b> ch, ch, 1
+	<b>add</b> j, j, 1
+	<b>cjmpul</b> bit_loop_ptr, j, 8</pre>
+		This modification is only beneficial when the CPU is configured with the <span class="icode">"dsp"</span> multiplier.</li>
+		<li>Conditional jumps, or any jumps using indirect addressing, can be expensive in pipelined processors because the pipeline has to be flushed. More advanced processors mitigate the problem by employing branch prediction (or even speculative execution), but LXP32 lacks this feature. To improve performance at the expense of code size, the inner loop (i.e. the "bit loop") can be unrolled completely. The <span class="icode">j</span> variable is not needed in this case:
+		<pre class="code">Crc32_byte_loop:
+	<b>lub</b> ch, p
+
+// bit 0
+	<b>xor</b> b, ch, crc
+	<b>and</b> b, b, 1
+	<b>sru</b> crc, crc, 1
+	<b>lcs</b> r0, Crc32_dont_xor_bit0
+	<b>cjmpe</b> r0, b, 0
+	<b>xor</b> crc, crc, polynom
+	
+Crc32_dont_xor_bit0:
+	<b>sru</b> ch, ch, 1
+	
+// bit 1
+	<b>xor</b> b, ch, crc
+	<b>and</b> b, b, 1
+	<b>sru</b> crc, crc, 1
+	<b>lcs</b> r0, Crc32_dont_xor_bit1
+	<b>cjmpe</b> r0, b, 0
+	<b>xor</b> crc, crc, polynom
+	
+Crc32_dont_xor_bit1:
+	<b>sru</b> ch, ch, 1
+
+...
+
+// bit 7
+	<b>xor</b> b, ch, crc
+	<b>and</b> b, b, 1
+	<b>sru</b> crc, crc, 1
+	<b>lcs</b> r0, Crc32_dont_xor_bit7
+	<b>cjmpe</b> r0, b, 0
+	<b>xor</b> crc, crc, polynom
+	
+Crc32_dont_xor_bit7:
+	<b>add</b> p, p, 1
+	<b>cjmpul</b> byte_loop_ptr, p, string_end_ptr</pre>
+		</li>
+	</ul>
+	</section>
+
+	<footer>
+		<p>© 2016&ndash;2019 by Alex I. Kuznetsov</p>
+		<p>All company and product names are trademarks or registered trademarks of their respective owners.</p>
+	</footer>
+</body>
+</html>
+

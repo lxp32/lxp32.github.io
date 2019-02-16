@@ -29,3 +29,8 @@
 	template="an/a-tiny-bootloader-for-lxp32.tml"
 	output="../an/a-tiny-bootloader-for-lxp32/index.html"
 }
+
+\create{
+	template="an/a-simple-example-crc32-calculation.tml"
+	output="../an/a-simple-example-crc32-calculation/index.html"
+}
