@@ -28,7 +28,11 @@
 	<div class="filelink noprint"><a href="javascript:window.print();"><img src="/images/printer-icon.svg" alt="[Printer]" onerror="this.src='/images/printer-icon.png'"> Print this page</a></div>
 	
 	<section>
-		<p>CRC32 is a popular checksum algorithm used to detect data corruption. There are a few variants of the algorithm which have the same mathematical properties but produce different results. The most common variant of the CRC32 checksum is calculated as follows:</p>
+		<p>CRC32 is a popular checksum algorithm used to detect data corruption. Multiple variants of the algorithm exist which have similar mathematical properties. The most common variant of the CRC32 checksum, sometimes called CRC-32b, is based on the following generator polynomial:</p>
+		
+		<p style="text-align: center;"><i>g</i>(<i>x</i>) = <i>x</i><sup>32</sup> + <i>x</i><sup>26</sup> + <i>x</i><sup>23</sup> + <i>x</i><sup>22</sup> + <i>x</i><sup>16</sup> + <i>x</i><sup>12</sup> + <i>x</i><sup>11</sup> + <i>x</i><sup>10</sup> + <i>x</i><sup>8</sup> + <i>x</i><sup>7</sup> + <i>x</i><sup>5</sup> + <i>x</i><sup>4</sup> + <i>x</i><sup>2</sup> + <i>x</i> + 1.</p>
+		
+		<p>This version of CRC32 can be calculated as follows:</p>
 		
 		<pre class="code"><b>#include</b> &lt;stddef.h&gt;
 <b>#include</b> &lt;stdint.h&gt;
@@ -48,8 +52,10 @@ uint32_t crc32(<b>const char</b> *s,size_t n) {
 	
 	<b>return</b> ~crc;
 }</pre>
-	
-		<p>When called for the <span class="icode">"123456789"</span> string (without the terminating null character), this function will return <span class="icode">0xCBF43926</span>.</p>
+		
+		<p><span class="icode">0xEDB88320</span> is the so-called <q>reversed</q> representation of the CRC32 generator polynomial intended to work with lsb-first implementations like this one. The same polynomial can be also represented as <span class="icode">0x04C11DB7</span> for msb-first implementations (this is called a <q>normal</q> representation).</p>
+		
+		<p>When invoked with the <span class="icode">"123456789"</span> string as an argument (without the terminating null character), this function will return <span class="icode">0xCBF43926</span>.</p>
 		
 		<p>A possible implementation of this algorithm in the LXP32 assembly language is presented below:</p>
 		
@@ -58,11 +64,11 @@ uint32_t crc32(<b>const char</b> *s,size_t n) {
 <i>/* 
  * Crc32_proc
  *
- * Calculates the most common variant of the CRC-32 checksum.
+ * Calculates the most common variant of the CRC32 checksum.
  * Example: CRC32("123456789") = 0xCBF43926.
  *
  * Inputs
- *     r1: p (string pointer)
+ *     r1: p (a pointer to the string)
  *     r2: n (string length in bytes)
  *     r3: old_value (initially 0, see below)
  * Outputs
@@ -80,7 +86,7 @@ uint32_t crc32(<b>const char</b> *s,size_t n) {
 <b>#define</b> ch r4
 <b>#define</b> j r5
 <b>#define</b> b r6
-<b>#define</b> polynom r7
+<b>#define</b> polynomial r7
 <b>#define</b> string_end_ptr r8
 <b>#define</b> loop_end_ptr r9
 <b>#define</b> dont_xor_ptr r10
@@ -88,7 +94,7 @@ uint32_t crc32(<b>const char</b> *s,size_t n) {
 <b>#define</b> byte_loop_ptr r12
 
 Crc32_proc:
-	<b>lc</b> polynom, 0xEDB88320
+	<b>lc</b> polynomial, 0xEDB88320
 	<b>add</b> string_end_ptr, p, n
 	<b>lcs</b> loop_end_ptr, Crc32_loop_end
 	<b>lcs</b> dont_xor_ptr, Crc32_dont_xor
@@ -100,14 +106,14 @@ Crc32_proc:
 	
 Crc32_byte_loop:
 	<b>lub</b> ch, p
-	<b>lcs</b> j, 0
+	<b>mov</b> j, 0
 
 Crc32_bit_loop:
 	<b>xor</b> b, ch, crc
 	<b>and</b> b, b, 1
 	<b>sru</b> crc, crc, 1
 	<b>cjmpe</b> dont_xor_ptr, b, 0
-	<b>xor</b> crc, crc, polynom
+	<b>xor</b> crc, crc, polynomial
 	
 Crc32_dont_xor:
 	<b>sru</b> ch, ch, 1
@@ -125,7 +131,7 @@ Crc32_loop_end:
 	<ul>
 		<li>This procedure conforms to the calling convention recommended by the manual. Since it doesn't call any nested procedures, and <span class="icode">r0</span>&ndash;<span class="icode">r31</span> registers are designated as caller-saved, it doesn't need to use the stack.</li>
 		<li>The code is assumed to be located near the beginning or end of the address space, hence <span class="icode"><b>lcs</b></span> (<em>Load Constant Short</em>) is used to load pointers. If the linker complains about pointers being out of range, replace <span class="icode"><b>lcs</b></span> with <span class="icode"><b>lc</b></span>.</li>
-		<li>To reduce loop execution time, all branch pointers are preloaded. Additionally, to avoid keeping track of both <span class="icode">i</span> and the current byte pointer, we calculate the <span class="icode">string_end_ptr</span> at the beginning and don't use the <span class="icode">i</span> variable at all.</li>
+		<li>To reduce loop execution time, all branch pointers are preloaded. In addition, to avoid keeping track of both <span class="icode">i</span> and the current byte pointer, we calculate <span class="icode">string_end_ptr</span> at the beginning and don't use the <span class="icode">i</span> variable at all.</li>
 		<li>Loops are implemented as post-condition to reduce execution time. Compare a pre-condition loop:
 			<pre class="code">Crc32_byte_loop:
 	<b>cjmpuge</b> loop_end_ptr, p, string_end_ptr
@@ -144,8 +150,8 @@ Crc32_loop_end:
 	<b>xor</b> b, ch, crc
 	<b>and</b> b, b, 1
 	<b>sru</b> crc, crc, 1
-	<s><b>cjmpe</b> dont_xor_ptr, b, 0</s> <font color="red"><b>mul</b> b, b, polynom</font>
-	<s><b>xor</b> crc, crc, polynom</s> <font color="red"><b>xor</b> crc, crc, b</font>
+	<s><b>cjmpe</b> dont_xor_ptr, b, 0</s> <font color="red"><b>mul</b> b, b, polynomial</font>
+	<s><b>xor</b> crc, crc, polynomial</s> <font color="red"><b>xor</b> crc, crc, b</font>
 	
 <s>Crc32_dont_xor:</s>
 	<b>sru</b> ch, ch, 1
@@ -162,7 +168,7 @@ Crc32_loop_end:
 	<b>sru</b> crc, crc, 1
 	<b>lcs</b> r0, Crc32_dont_xor_bit0
 	<b>cjmpe</b> r0, b, 0
-	<b>xor</b> crc, crc, polynom
+	<b>xor</b> crc, crc, polynomial
 	
 Crc32_dont_xor_bit0:
 	<b>sru</b> ch, ch, 1
@@ -173,7 +179,7 @@ Crc32_dont_xor_bit0:
 	<b>sru</b> crc, crc, 1
 	<b>lcs</b> r0, Crc32_dont_xor_bit1
 	<b>cjmpe</b> r0, b, 0
-	<b>xor</b> crc, crc, polynom
+	<b>xor</b> crc, crc, polynomial
 	
 Crc32_dont_xor_bit1:
 	<b>sru</b> ch, ch, 1
@@ -186,12 +192,13 @@ Crc32_dont_xor_bit1:
 	<b>sru</b> crc, crc, 1
 	<b>lcs</b> r0, Crc32_dont_xor_bit7
 	<b>cjmpe</b> r0, b, 0
-	<b>xor</b> crc, crc, polynom
+	<b>xor</b> crc, crc, polynomial
 	
 Crc32_dont_xor_bit7:
 	<b>add</b> p, p, 1
 	<b>cjmpul</b> byte_loop_ptr, p, string_end_ptr</pre>
 		</li>
+		<li>It is also possible to calculate CRC32 in a bytewise manner without a bit loop at all. This approach utilizes a lookup table and does not depend on a CPU architecture. Details can be found in <em>Todd K. Moon, <q>Error Correction Coding. Mathematical Methods and Algorithms</q>, Wiley, 2005.</em></li>
 	</ul>
 	</section>
 
