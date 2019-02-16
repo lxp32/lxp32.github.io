@@ -152,11 +152,11 @@ Crc32_loop_end:
 	<b>add</b> j, j, 1
 	<b>cjmpul</b> bit_loop_ptr, j, 8</pre>
 		This modification is only beneficial when the CPU is configured with the <span class="icode">"dsp"</span> multiplier.</li>
-		<li>Conditional jumps, or any jumps using indirect addressing, can be expensive in pipelined processors because the pipeline has to be flushed. More advanced processors mitigate the problem by employing branch prediction (or even speculative execution), but LXP32 lacks this feature. To improve performance at the expense of code size, the inner loop (i.e. the "bit loop") can be unrolled completely. The <span class="icode">j</span> variable is not needed in this case:
+		<li>Conditional jumps, or any jumps using indirect addressing, can be expensive in pipelined processors because the pipeline has to be flushed. More advanced processors mitigate the problem by employing branch prediction (or even speculative execution), but LXP32 lacks this feature. To improve performance at the expense of code size, the inner loop (i.e. the <q>bit loop</q>) can be unrolled completely. The <span class="icode">j</span> variable is not needed in this case:
 		<pre class="code">Crc32_byte_loop:
 	<b>lub</b> ch, p
 
-// bit 0
+<i>// bit 0</i>
 	<b>xor</b> b, ch, crc
 	<b>and</b> b, b, 1
 	<b>sru</b> crc, crc, 1
@@ -167,7 +167,7 @@ Crc32_loop_end:
 Crc32_dont_xor_bit0:
 	<b>sru</b> ch, ch, 1
 	
-// bit 1
+<i>// bit 1</i>
 	<b>xor</b> b, ch, crc
 	<b>and</b> b, b, 1
 	<b>sru</b> crc, crc, 1
@@ -180,7 +180,7 @@ Crc32_dont_xor_bit1:
 
 ...
 
-// bit 7
+<i>// bit 7</i>
 	<b>xor</b> b, ch, crc
 	<b>and</b> b, b, 1
 	<b>sru</b> crc, crc, 1
