@@ -16,21 +16,21 @@
 }
 
 \create{
-	template="an/why-use-a-soft-cpu-core.tml"
-	output="../an/why-use-a-soft-cpu-core/index.html"
+	template="docs/why-use-a-soft-cpu-core.tml"
+	output="../docs/why-use-a-soft-cpu-core/index.html"
 }
 
 \create{
-	template="an/lxp32-coding-style-guidelines.tml"
-	output="../an/lxp32-coding-style-guidelines/index.html"
+	template="docs/lxp32-coding-style-guidelines.tml"
+	output="../docs/lxp32-coding-style-guidelines/index.html"
 }
 
 \create{
-	template="an/a-tiny-bootloader-for-lxp32.tml"
-	output="../an/a-tiny-bootloader-for-lxp32/index.html"
+	template="docs/a-tiny-bootloader-for-lxp32.tml"
+	output="../docs/a-tiny-bootloader-for-lxp32/index.html"
 }
 
 \create{
-	template="an/a-simple-example-crc32-calculation.tml"
-	output="../an/a-simple-example-crc32-calculation/index.html"
+	template="docs/a-simple-example-crc32-calculation.tml"
+	output="../docs/a-simple-example-crc32-calculation/index.html"
 }

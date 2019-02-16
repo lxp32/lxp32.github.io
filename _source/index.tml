@@ -81,10 +81,10 @@
 		<p class="filelink"><a href="/docs/lxp32-trm.pdf"><img src="/images/pdf-icon.svg" alt="[PDF]" onerror="this.src='/images/pdf-icon.png'"> LXP32 CPU Technical Reference Manual</a></p>
 		
 		<h3>Application Notes / White Papers</h3>
-		<p class="filelink"><a href="/an/why-use-a-soft-cpu-core/"><img src="/images/html-icon.svg" alt="[HTML]" onerror="this.src='/images/html-icon.png'"> Why use a soft CPU core?</a></p>
-		<p class="filelink"><a href="/an/lxp32-coding-style-guidelines/"><img src="/images/html-icon.svg" alt="[HTML]" onerror="this.src='/images/html-icon.png'"> LXP32 coding style guidelines</a></p>
-		<p class="filelink"><a href="/an/a-tiny-bootloader-for-lxp32/"><img src="/images/html-icon.svg" alt="[HTML]" onerror="this.src='/images/html-icon.png'"> A tiny bootloader for LXP32</a></p>
-		<p class="filelink"><a href="/an/a-simple-example-crc32-calculation/"><img src="/images/html-icon.svg" alt="[HTML]" onerror="this.src='/images/html-icon.png'"> A simple example: CRC32 calculation</a></p>
+		<p class="filelink"><a href="/docs/why-use-a-soft-cpu-core/"><img src="/images/html-icon.svg" alt="[HTML]" onerror="this.src='/images/html-icon.png'"> Why use a soft CPU core?</a></p>
+		<p class="filelink"><a href="/docs/lxp32-coding-style-guidelines/"><img src="/images/html-icon.svg" alt="[HTML]" onerror="this.src='/images/html-icon.png'"> LXP32 coding style guidelines</a></p>
+		<p class="filelink"><a href="/docs/a-tiny-bootloader-for-lxp32/"><img src="/images/html-icon.svg" alt="[HTML]" onerror="this.src='/images/html-icon.png'"> A tiny bootloader for LXP32</a></p>
+		<p class="filelink"><a href="/docs/a-simple-example-crc32-calculation/"><img src="/images/html-icon.svg" alt="[HTML]" onerror="this.src='/images/html-icon.png'"> A simple example: CRC32 calculation</a></p>
 	</section>
 	
 	<section id="dev">
