@@ -204,7 +204,7 @@ Crc32_dont_xor_bit7:
 
 uint32_t crc32_table[256];
 
-<b>void</b> build_crc32_table() {
+<b>void</b> build_crc32_table(<b>void</b>) {
 	<b>for</b>(uint32_t i=0;i&lt;256;i++) {
 		uint32_t ch=i;
 		uint32_t crc=0;
