@@ -86,7 +86,7 @@ h4 {
 
 .code {
     background: #6adcde;
-    font-family: "DejaVu Sans Mono", monospace, serif;
+    font-family: "Cousine", monospace, serif;
 	font-size: 0.9rem;
     white-space: pre;
     padding: 1em 1em 1em 4em;
@@ -94,8 +94,8 @@ h4 {
 }
 
 .icode {
-    font-family: "DejaVu Sans Mono", monospace, serif;
-	font-size: 0.9rem;
+    font-family: "Cousine", monospace, serif;
+	font-size: 0.95rem;
 }
 
 .semanticheading {
