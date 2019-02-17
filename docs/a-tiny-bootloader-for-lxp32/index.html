@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
 	<meta charset="UTF-8">
 	<meta name="description" content="A minimalistic bootloader ROM for the LXP32 CPU which requires only eight 32-bit words.">
@@ -118,22 +118,22 @@ CB040302</pre>
 <b>begin</b>
 	<b>if rising_edge</b>(clk_i) <b>then</b>
 		<b>case</b> addr_i <b>is</b>
-		<b>when</b> "000" =>
-			data_o<=X"70010418";
-		<b>when</b> "001" =>
-			data_o<=X"A0034000";
-		<b>when</b> "010" =>
-			data_o<=X"BF04FFEC";
-		<b>when</b> "011" =>
-			data_o<=X"22000100";
-		<b>when</b> "100" =>
-			data_o<=X"33000200";
-		<b>when</b> "101" =>
-			data_o<=X"42010104";
-		<b>when</b> "110" =>
-			data_o<=X"42020204";
-		<b>when others</b> =>
-			data_o<=X"CB040302";
+		<b>when</b> "000" =&gt;
+			data_o&lt;=X"70010418";
+		<b>when</b> "001" =&gt;
+			data_o&lt;=X"A0034000";
+		<b>when</b> "010" =&gt;
+			data_o&lt;=X"BF04FFEC";
+		<b>when</b> "011" =&gt;
+			data_o&lt;=X"22000100";
+		<b>when</b> "100" =&gt;
+			data_o&lt;=X"33000200";
+		<b>when</b> "101" =&gt;
+			data_o&lt;=X"42010104";
+		<b>when</b> "110" =&gt;
+			data_o&lt;=X"42020204";
+		<b>when others</b> =&gt;
+			data_o&lt;=X"CB040302";
 		<b>end case</b>;
 	<b>end if</b>;
 <b>end process</b>;

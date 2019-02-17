@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
 	<meta charset="UTF-8">
 	<meta name="description" content="An implementation of the CRC32 algorithm in the LXP32 assembly language.">
@@ -159,8 +159,8 @@ Crc32_loop_end:
 	<b>xor</b> b, ch, crc
 	<b>and</b> b, b, 1
 	<b>sru</b> crc, crc, 1
-	<s><b>cjmpe</b> dont_xor_ptr, b, 0</s> <font color="red"><b>mul</b> b, b, polynomial</font>
-	<s><b>xor</b> crc, crc, polynomial</s> <font color="red"><b>xor</b> crc, crc, b</font>
+	<s><b>cjmpe</b> dont_xor_ptr, b, 0</s> <span class="red"><b>mul</b> b, b, polynomial</span>
+	<s><b>xor</b> crc, crc, polynomial</s> <span class="red"><b>xor</b> crc, crc, b</span>
 	
 <s>Crc32_dont_xor:</s>
 	<b>sru</b> ch, ch, 1
