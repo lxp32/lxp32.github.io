@@ -12,7 +12,6 @@
 	<nav>
 		<ul>
 			<li><a href="/"><img src="/images/lxp32-logo.png" alt="LXP32"></a></li>
-			<li><a href="/#features">Features</a></li>
 			<li><a href="/#download">Download</a></li>
 			<li><a href="/#docs">Documentation</a></li>
 			<li><a href="/#dev">Development</a></li>
@@ -28,6 +27,8 @@
 	<div class="filelink noprint"><a href="javascript:window.print();"><img src="/images/printer-icon.svg" alt="[Printer]" onerror="this.src='/images/printer-icon.png'"> Print this page</a></div>
 	
 	<section>
+		<h2 class="semantic">Introduction</h2>
+		
 		<p>If a program is stored in a slow external memory device (e.g. a serial Flash chip), it must be copied to the RAM before executing. While it is possible to design a RAM loading machine in Verilog or VHDL, this task can be also accomplished by the CPU itself, provided that the program RAM is accessible from the data bus.</p>
 		
 		<p>To do this we will need a small ROM consisting of eight 32-bit words which will be accessible to the CPU via the instruction bus (it doesn't have to be connected to the data bus). Such a tiny ROM can be implemented on LUTs without using RAM blocks.</p>
@@ -68,7 +69,9 @@ BF04FFEC
 42010104
 42020204
 CB040302</pre>
-		
+	</section>
+	
+	<section>
 		<h2>ROM code in Verilog</h2>
 		
 		<pre class="code"><b>module</b> bootrom(
@@ -91,7 +94,9 @@ CB040302</pre>
 <b>end</b>
 
 <b>endmodule</b></pre>
-		
+	</section>
+	
+	<section>
 		<h2>ROM code in VHDL</h2>
 		
 		<pre class="code"><b>library</b> ieee;

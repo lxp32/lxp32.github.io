@@ -12,7 +12,6 @@
 	<nav>
 		<ul>
 			<li><a href="/"><img src="/images/lxp32-logo.png" alt="LXP32"></a></li>
-			<li><a href="/#features">Features</a></li>
 			<li><a href="/#download">Download</a></li>
 			<li><a href="/#docs">Documentation</a></li>
 			<li><a href="/#dev">Development</a></li>
@@ -28,6 +27,8 @@
 	<div class="filelink noprint"><a href="javascript:window.print();"><img src="/images/printer-icon.svg" alt="[Printer]" onerror="this.src='/images/printer-icon.png'"> Print this page</a></div>
 	
 	<section>
+		<h2 class="semantic">Introduction</h2>
+		
 		<p>A <em>soft core</em> is a reusable module delivered to the system on a chip (SoC) designer in the form of synthesizable HDL code. On FPGA devices soft cores are implemented using programmable logic resources, as opposed to <em>hard cores</em> baked into the silicon. You may wonder, if someone needs a processor, why would they use an FPGA at all when one can opt for a cheaper microcontroller instead?</p>
 
 		<p>In a nutshell, a CPU is ideal for complex processing of a small amount of data; sophisticated algorithms with extensive branching can be implemented relatively easily. Conversely, an FPGA is well suited for relatively simple crunching of a large amount of data; it excels at algorithms that can be pipelined and/or parallelized. Many problems require a bit of both, and that's where FPGA-based SoCs are useful.</p>
@@ -43,7 +44,9 @@
 		</ul>
 		
 		<p>Let's explore each of these approaches.</p>
-
+	</section>
+	
+	<section>
 		<h3>Microcontroller (MCU) based design</h3>
 		
 		<p>There are all kinds of microcontrollers on the market. Many of them are rather cheap, which makes them popular for applications where performance is not a concern.</p>
@@ -62,7 +65,9 @@
 			<li>Limited performance.</li>
 			<li>Cycle-accurate timing is hard to impossible.</li>
 		</ul>
-
+	</section>
+	
+	<section>
 		<h3>Pure programmable logic design (without a CPU core)</h3>
 
 		<p>Pros:</p>
@@ -77,7 +82,9 @@
 		<ul>
 			<li>Sequential control logic involves state machines which scale poorly and are tedious to implement and maintain.</li>
 		</ul>
-
+	</section>
+	
+	<section>
 		<h3>Programmable SoC with a hard CPU</h3>
 		
 		<p>Many FPGA vendors provide programmable system on a chip solutions that include both a conventional microprocessor core and a programmable logic array on the same chip, commonly called <em>SoC FPGAs</em>. These SoCs can be viewed as FPGA devices with a <q>hard</q> CPU core, but it can be easier to think of them as microprocessors with an FPGA as one of the peripherals. A high performance interconnect is used to pass data between the CPU core and programmable logic array. <a href="https://www.xilinx.com/products/silicon-devices/soc.html">Zynq</a> from Xilinx, <a href="https://www.intel.com/content/www/us/en/products/programmable/soc.html">S series devices</a> from Intel (Altera) and <a href="https://www.microsemi.com/product-directory/fpga-soc/1639-soc-fpgas">SmartFusion</a> from Microsemi (Actel) are examples of such programmable SoCs.</p>
@@ -95,7 +102,9 @@
 			<li>Relatively expensive.</li>
 			<li>Poor portability: the design flow is not standardized and highly depends on the tools of the particular vendor. Even for the same vendor, tool versions can have significant differences in the design flow.</li>
 		</ul>
-
+	</section>
+	
+	<section>
 		<h3>Programmable SoC with a soft CPU</h3>
 
 		<p>Soft CPU cores are written in a hardware description language such as VHDL or Verilog and implemented on an FPGA like any other logic would be. Some soft cores are provided by FPGA vendors, for example, <a href="https://www.xilinx.com/products/design-tools/microblaze.html">MicroBlaze</a> from Xilinx or <a href="https://www.intel.com/content/www/us/en/products/programmable/processor/nios-ii.html">Nios II</a> from Intel (Altera). Such cores are limited to the devices of their vendors. Some other processor cores, including <a href="https://lxp32.github.io/">LXP32</a>, are portable and can be used with a broad range of FPGA devices.</p>
@@ -115,7 +124,9 @@
 		</ul>
 		
 		<p>Despite performance limitations, a soft processor core can be a powerful computing device running a full-fledged operating system like Linux. Alternatively, it can be a lightweight unit serving as a more convenient replacement for clunky state machines while running from on-chip RAM. This kind of flexibility is not available with hard CPU cores.</p>
-
+	</section>
+	
+	<section>
 		<h3>Discrete microcontroller and FPGA</h3>
 		
 		<p>Another obvious solution is to make a board with both an MCU and FPGA, and some kind of link between them.</p>
@@ -133,7 +144,9 @@
 		</ul>
 		
 		<p>Still, it is a perfectly valid solution for scenarios where there isn't much communication between the CPU and FPGA.</p>
-		
+	</section>
+	
+	<section>
 		<h2>Summary</h2>
 		
 		<p>A system on a chip, based on either hard or soft CPU core, allows the designer to divide tasks between the processor and the FPGA peripheral, providing the best of both worlds. A SoC also doesn't suffer from a communication bottleneck characteristic of a discrete design.</p>

@@ -8,8 +8,8 @@
 	
 	<div class="subtagline"><i>A soft processor core based on a simple, original instruction set designed for efficient FPGA implementation</i></div>
 	
-	<section id="features">
-		<h1 class="semanticheading">Features</h1>
+	<div>
+		<h1 class="semantic">Features</h1>
 		<div class="featurebox">
 			<h3>Portable</h3>
 			<ul>
@@ -58,7 +58,7 @@
 				<li>Open source simulation is available using <a href="http://ghdl.free.fr/">GHDL</a></li>
 			</ul>
 		</div>
-	</section>
+	</div>
 	
 	<section id="download">
 		<h2>Download</h2>

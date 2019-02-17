@@ -9,6 +9,8 @@
 	<div class="filelink noprint"><a href="javascript:window.print();"><img src="/images/printer-icon.svg" alt="[Printer]" onerror="this.src='/images/printer-icon.png'"> Print this page</a></div>
 	
 	<section>
+		<h2 class="semantic">Introduction</h2>
+		
 		<p>In this document we will use an example of CRC32 calculation to illustrate various optimization techniques that can be used in the LXP32 assembly language.</p>
 		
 		<p>CRC32 is a popular checksum algorithm used to detect data corruption. Multiple variants of the algorithm exist which have similar mathematical properties. The most common variant of the CRC32 checksum, sometimes called CRC-32b, is based on the following generator polynomial:</p>
@@ -39,7 +41,9 @@ uint32_t crc32(<b>const char</b> *s,size_t n) {
 		<p>This code processes one bit at a time. <span class="icode">0xEDB88320</span> is the so-called <q>reversed</q> representation of the CRC32 generator polynomial intended to work with lsb-first implementations like this one. The same polynomial can be also represented as <span class="icode">0x04C11DB7</span> for msb-first implementations (this is called a <q>normal</q> representation).</p>
 		
 		<p>When invoked with the <span class="icode">"123456789"</span> string as an argument (without the terminating null character), this function will return <span class="icode">0xCBF43926</span>.</p>
-		
+	</section>
+	
+	<section>
 		<h2>Bitwise implementation</h2>
 		
 		<p>An implementation of this algorithm in the LXP32 assembly language that is more or less equivalent to the above code is presented below:</p>
@@ -186,7 +190,9 @@ Crc32_dont_xor_bit7:
 	<b>cjmpul</b> byte_loop_ptr, p, string_end_ptr</pre>
 			</li>
 		</ul>
-		
+	</section>
+	
+	<section>
 		<h2>Bytewise implementation</h2>
 		
 		<p>It is also possible to calculate CRC32 in a bytewise manner, eliminating the bit loop altogether. This approach is about six times faster than the previous one but needs additional memory for a pre-calculated 256-word lookup table. The idea is described in <em>Todd K. Moon, <q>Error Correction Coding. Mathematical Methods and Algorithms</q>, Wiley, 2005, ISBN 0-471-64800-0</em>.</p>

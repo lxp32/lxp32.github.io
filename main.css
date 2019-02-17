@@ -29,11 +29,11 @@ nav a:hover {
 	color: black;
 }
 
-section p, section ul {
+section {
 	max-width: 50em;
 }
 
-section ul {
+section ul, div ul {
 	list-style-type: circle;
 }
 
@@ -89,8 +89,7 @@ h4 {
     font-family: "Cousine", monospace, serif;
 	font-size: 0.9rem;
     white-space: pre;
-    padding: 1em 1em 1em 4em;
-	width: 50em;
+    padding: 1em 1em 1em 3em;
 }
 
 .icode {
@@ -98,7 +97,7 @@ h4 {
 	font-size: 0.95rem;
 }
 
-.semanticheading {
+.semantic {
 	display: none;
 }
 
