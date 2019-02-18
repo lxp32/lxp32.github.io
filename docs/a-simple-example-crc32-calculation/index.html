@@ -248,14 +248,16 @@ uint32_t crc32_fast(<b>const char</b> *s,size_t n) {
 	<b>return</b> ~crc;
 }</pre>
 		
-		<p>An implementation of this algorithm in the LXP32 assembly language:</p>
+		<p><span class="icode">build_crc32_table()</span> must be invoked before the first call of the <span class="icode">crc32_fast()</span> function.</p>
+		
+		<p>An implementation of this algorithm in the LXP32 assembly language is presented below. It incorporates the entire lookup table to avoid computing it at runtime.</p>
 		
 		<pre class="code"><b>#export</b> Crc32_fast_proc
 
 <i>/* 
  * Crc32_fast_proc
  *
- * Calculates the most common variant of the CRC-32 checksum
+ * Calculates the most common variant of the CRC32 checksum
  * using a fast bytewise algorithm.
  *
  * Example: CRC32("123456789") = 0xCBF43926.
