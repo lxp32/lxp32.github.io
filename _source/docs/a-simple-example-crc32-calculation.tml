@@ -55,45 +55,42 @@ uint32_t crc32(<b>const char</b> *s,size_t n) {
 <i>/* 
  * Crc32_proc
  *
- * Calculates the most common variant of the CRC32 checksum.
+ * Calculates the most common variant of the CRC32 checksum
+ *
  * Example: CRC32("123456789") = 0xCBF43926.
  *
  * Inputs
- *     r1: p (a pointer to the string)
- *     r2: n (string length in bytes)
- *     r3: old_value (initially 0, see below)
+ *     r1: crc (initial CRC value, usually 0, see below)
+ *     r2: p (string pointer)
+ *     r3: n (string length in bytes)
  * Outputs
- *     r1: CRC32 value
+ *     r1: CRC value
  *
- * Note: the "old_value" argument should be initially set to 0. To continue
+ * Note: the "crc" argument should be initially set to 0. To continue
  * the calculation, set it to the value returned by the previous call.
- * This feature can be useful to calculate the checksum for a long data stream
- * piecewise.
+ * This can be useful to calculate the checksum for a long data stream.
  */</i>
 
-<b>#define</b> p r1
-<b>#define</b> n r2
-<b>#define</b> crc r3
+<b>#define</b> crc r1
+<b>#define</b> p r2
+<b>#define</b> n r3
 <b>#define</b> ch r4
 <b>#define</b> j r5
 <b>#define</b> b r6
 <b>#define</b> polynomial r7
 <b>#define</b> string_end_ptr r8
-<b>#define</b> loop_end_ptr r9
-<b>#define</b> dont_xor_ptr r10
-<b>#define</b> bit_loop_ptr r11
-<b>#define</b> byte_loop_ptr r12
+<b>#define</b> dont_xor_ptr r9
+<b>#define</b> bit_loop_ptr r10
+<b>#define</b> byte_loop_ptr r11
 
 Crc32_proc:
+	<b>cjmpe</b> rp, n, 0 <i>// return immediately if the string is empty</i>
 	<b>lc</b> polynomial, 0xEDB88320
 	<b>add</b> string_end_ptr, p, n
-	<b>lcs</b> loop_end_ptr, Crc32_loop_end
 	<b>lcs</b> dont_xor_ptr, Crc32_dont_xor
 	<b>lcs</b> bit_loop_ptr, Crc32_bit_loop
 	<b>lcs</b> byte_loop_ptr, Crc32_byte_loop
 	<b>not</b> crc, crc
-	
-	<b>cjmpe</b> loop_end_ptr, n, 0
 	
 Crc32_byte_loop:
 	<b>lub</b> ch, p
@@ -113,8 +110,7 @@ Crc32_dont_xor:
 	<b>add</b> p, p, 1
 	<b>cjmpul</b> byte_loop_ptr, p, string_end_ptr <i>// end of the byte loop</i>
 	
-Crc32_loop_end:
-	<b>not</b> r1, crc
+	<b>not</b> crc, crc
 	<b>ret</b></pre>
 	
 		<p>Notes:</p>
@@ -245,36 +241,33 @@ uint32_t crc32_fast(<b>const char</b> *s,size_t n) {
  * Example: CRC32("123456789") = 0xCBF43926.
  *
  * Inputs
- *     r1: p (string pointer)
- *     r2: n (string length in bytes)
- *     r3: old_value (initially 0, see below)
+ *     r1: crc (initial CRC value, usually 0, see below)
+ *     r2: p (string pointer)
+ *     r3: n (string length in bytes)
  * Outputs
- *     r1: CRC32 value
+ *     r1: CRC value
  *
- * Note: the "old_value" argument should be initially set to 0. To continue
+ * Note: the "crc" argument should be initially set to 0. To continue
  * the calculation, set it to the value returned by the previous call.
  * This can be useful to calculate the checksum for a long data stream.
  */</i>
 
-<b>#define</b> p r1
-<b>#define</b> n r2
-<b>#define</b> crc r3
+<b>#define</b> crc r1
+<b>#define</b> p r2
+<b>#define</b> n r3
 <b>#define</b> x r4
 <b>#define</b> string_end_ptr r5
 <b>#define</b> constant_ff r6
 <b>#define</b> table_ptr r7
-<b>#define</b> end_ptr r8
-<b>#define</b> loop_ptr r9
+<b>#define</b> loop_ptr r8
 
 Crc32_fast_proc:
+	<b>cjmpe</b> rp, n, 0 <i>// return immediately if the string is empty</i>
 	<b>add</b> string_end_ptr, p, n
 	<b>lcs</b> constant_ff, 0xFF
 	<b>lcs</b> table_ptr, Crc32_fast_table
-	<b>lcs</b> end_ptr, Crc32_fast_end
 	<b>lcs</b> loop_ptr, Crc32_fast_loop
 	<b>not</b> crc, crc
-	
-	<b>cjmpe</b> end_ptr, n, 0
 	
 Crc32_fast_loop:
 	<b>lub</b> x, p <i>// x := ch</i>
@@ -288,8 +281,7 @@ Crc32_fast_loop:
 	<b>add</b> p, p, 1
 	<b>cjmpul</b> loop_ptr, p, string_end_ptr
 	
-Crc32_fast_end:
-	<b>not</b> r1, crc
+	<b>not</b> crc, crc
 	<b>ret</b>
 
 Crc32_fast_table:
