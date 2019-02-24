@@ -42,18 +42,31 @@
 		
 		<p>Let's also assume that the source address is 0x04000000 (any address consisting mostly of zeros will work), and the program size is 2048 words (i.e. 16384 bytes, any size less than 1048576 will work).</p>
 		
-		<pre class="code">	<b>sl</b> r1, 4, 24 <i>// r1 = 0x04000000 - source pointer</i>
-<i>// r2 is already 0 after reset - destination pointer</i>
-	<b>lcs</b> r3, 16384 <i>// program memory size in bytes</i>
-	<b>lcs</b> r4, Loop
+		<pre class="code"><i>// The most significant byte of the source address</i>
+<i>// (others are assumed to be zero)</i>
+<b>#define</b> SOURCE_ADDRESS_MSB 0x04
+
+<i>// Program size in bytes</i>
+<b>#define</b> PROGRAM_SIZE 16384
+
+<i>// Register variables</i>
+<b>#define</b> src r1
+<b>#define</b> dst r2
+<b>#define</b> size r3
+<b>#define</b> loop_ptr r4
+
+	<b>sl</b> src, SOURCE_ADDRESS_MSB, 24 <i>// load source pointer to r1</i>
+<i>// dst (r2) is already 0 after reset</i>
+	<b>lcs</b> size, PROGRAM_SIZE
+	<b>lcs</b> loop_ptr, Loop
 Loop:
-	<b>lw</b> r0, r1
-	<b>sw</b> r2, r0
-	<b>add</b> r1, r1, 4
-	<b>add</b> r2, r2, 4
-	<b>cjmpul</b> r4, r2, r3 <i>// loop</i></pre>
+	<b>lw</b> r0, src
+	<b>sw</b> dst, r0
+	<b>add</b> src, src, 4
+	<b>add</b> dst, dst, 4
+	<b>cjmpul</b> loop_ptr, dst, size</pre>
 		
-		<p>The source address is loaded to <span class="icode">r1</span> using the <span class="icode"><b>sl</b></span> command instead of <span class="icode"><b>lc</b></span> since it only occupies one word. After copying the required number of words, the last <span class="icode"><b>cjmpul</b></span> instruction will cause the instruction pointer to overflow and transfer execution to the 0x00000000 address, which is the start of the program RAM.</p>
+		<p>The source address is loaded using the <span class="icode"><b>sl</b></span> instruction instead of <span class="icode"><b>lc</b></span> since the former occupies only one word. After copying the required number of words, the last <span class="icode"><b>cjmpul</b></span> instruction will cause the instruction pointer to overflow and transfer execution to the 0x00000000 address, which is the start of the program RAM.</p>
 		
 		<p>To compile the code, we must specify the base address explicitly, for example:</p>
 		
