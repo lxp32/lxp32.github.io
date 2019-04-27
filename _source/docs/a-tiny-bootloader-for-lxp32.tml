@@ -22,14 +22,14 @@
 			<li>the bootloader code must be located at the very end of the address space, starting at 0xFFFFFFE0.</li>
 		</ul>
 		
-		<p>Let's also assume that the source address is 0x04000000 (any address consisting mostly of zeros will work), and the program size is 2048 words (i.e. 16384 bytes, any size less than 1048576 will work).</p>
+		<p>Let's also assume that the source address is 0x04000000 (any address consisting mostly of zeros will work), and the program size is 2048 words (i.e. 8192 bytes, any size less than 1048576 will work).</p>
 		
 		<pre class="code"><i>// The most significant byte of the source address</i>
 <i>// (others are assumed to be zero)</i>
 <b>#define</b> SOURCE_ADDRESS_MSB 0x04
 
 <i>// Program size in bytes</i>
-<b>#define</b> PROGRAM_SIZE 16384
+<b>#define</b> PROGRAM_SIZE 8192
 
 <i>// Register variables</i>
 <b>#define</b> src r1
@@ -57,7 +57,7 @@ Loop:
 		<p>As a result, the following machine code will be generated:</p>
 		
 		<pre class="code">70010418
-A0034000
+A0032000
 BF04FFEC
 22000100
 33000200
@@ -78,7 +78,7 @@ CB040302</pre>
 <b>always</b>@(<b>posedge</b> clk_i) <b>begin</b>
 	<b>case</b>(<b>addr_i</b>)
 		3'b000: data_o  = 32'h70010418;
-		3'b001: data_o  = 32'hA0034000;
+		3'b001: data_o  = 32'hA0032000;
 		3'b010: data_o  = 32'hBF04FFEC;
 		3'b011: data_o  = 32'h22000100;
 		3'b100: data_o  = 32'h33000200;
@@ -116,7 +116,7 @@ CB040302</pre>
 		<b>when</b> "000" =&gt;
 			data_o&lt;=X"70010418";
 		<b>when</b> "001" =&gt;
-			data_o&lt;=X"A0034000";
+			data_o&lt;=X"A0032000";
 		<b>when</b> "010" =&gt;
 			data_o&lt;=X"BF04FFEC";
 		<b>when</b> "011" =&gt;
