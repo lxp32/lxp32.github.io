@@ -11,11 +11,6 @@
 }
 
 \create{
-	template="contact.tml"
-	output="../contact.html"
-}
-
-\create{
 	template="docs/why-use-a-soft-cpu-core.tml"
 	output="../docs/why-use-a-soft-cpu-core/index.html"
 }
