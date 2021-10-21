@@ -62,7 +62,7 @@
 	
 	<section id="download">
 		<h2>Download</h2>
-		<p>The latest version of the LXP32 soft microprocessor, 1.1, was released on 2019-01-11.</p>
+		<p>The latest version of the LXP32 soft microprocessor, 1.1, was released on 2021-10-21.</p>
 		<p class="filelink"><a href="https://github.com/lxp32/lxp32-cpu/releases/download/v1.2/lxp32-cpu-1.2.7z" download><img src="/images/download-icon.svg" alt="Download" onerror="this.src='/images/download-icon.png'"> <b>lxp32-cpu-1.1.7z</b></a></p>
 		<p>The package includes:</p>
 		<ul>
